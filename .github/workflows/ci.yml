@@ -1,25 +1,42 @@
-
-name: Python CI
+name: Python CI/CD
 
 on:
   push:
+    branches: [ "main" ]
   pull_request:
+    branches: [ "main" ]
 
 jobs:
+  # JOB 1: Test the code
   test:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Check out repository
-        uses: actions/checkout@v4
+    - name: Check out repository
+      uses: actions/checkout@v4
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.11'
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install pytest
+    - name: Run tests
+      run: pytest
 
-      - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: "3.11"
+  # JOB 2: Build and Push Docker Image (CD)
+  build-and-push:
+    needs: test # THIS IS THE MAGIC LINE. It waits for the tests to pass!
+    runs-on: ubuntu-latest
+    steps:
+    - name: Check out repository
+      uses: actions/checkout@v4
 
-      - name: Install pytest
-        run: python -m pip install pytest
+    - name: Log in to Docker Hub
+      run: echo "${{ secrets.DOCKERHUB_TOKEN }}" | docker login -u "${{ secrets.DOCKERHUB_USERNAME }}" --password-stdin
 
-      - name: Run tests
-        run: python -m pytest
+    - name: Build Docker image
+      run: docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/my-calculator-app:latest .
+
+    - name: Push to Docker Hub
+      run: docker push ${{ secrets.DOCKERHUB_USERNAME }}/my-calculator-app:latest
