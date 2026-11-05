@@ -1,14 +1,18 @@
-# 1. Use an official lightweight Python image
+
 FROM python:3.11-slim
 
-# 2. Set the working directory inside the container
 WORKDIR /app
 
-# 3. Copy your local files into the container
-COPY . /app
+COPY requirements.txt .
 
-# 4. Install pytest so the container can run your tests
-RUN pip install pytest
+RUN pip install --no-cache-dir -r requirements.txt
 
-# 5. The command to run when the container starts
-CMD ["pytest", "-v"]
+COPY app.py .
+COPY templates ./templates
+COPY static ./static
+
+RUN mkdir -p instance
+
+EXPOSE 5000
+
+CMD ["gunicorn", "--bind", "0.0.0.0:5000", "app:app"]

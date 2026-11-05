@@ -1,0 +1,215 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="My practical journey learning backend development, testing and DevOps.">
+    <title>DevLab | My Learning Journey</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+    <header class="navbar">
+        <a href="/" class="logo">Dev<span>Lab.</span></a>
+
+        <nav>
+            <a href="#journey">My Journey</a>
+            <a href="#tools">Technologies</a>
+            <a href="#feedback">Give Advice</a>
+        </nav>
+    </header>
+
+    <main>
+
+        <!-- HERO SECTION -->
+        <section class="hero">
+            <div class="hero-content">
+                <p class="eyebrow">SOFTWARE ENGINEERING • BACKEND • DEVOPS</p>
+
+                <h1>
+                    Learning by building.
+                    <span>Growing by doing.</span>
+                </h1>
+
+                <p class="hero-description">
+                    Welcome to my learning lab! I'm exploring how modern
+                    applications are built, tested, automated and deployed.
+                    This website documents my practical journey, experiments
+                    and progress.
+                </p>
+
+                <a href="#journey" class="primary-button">
+                    Explore my journey →
+                </a>
+            </div>
+
+            <div class="hero-visual">
+                <div class="visual-card">
+                    <span class="visual-icon">💻</span>
+                    <h3>Build</h3>
+                    <p>Create applications</p>
+                </div>
+
+                <div class="visual-card pink-card">
+                    <span class="visual-icon">⚙️</span>
+                    <h3>Automate</h3>
+                    <p>Test every change</p>
+                </div>
+
+                <div class="visual-card blue-card">
+                    <span class="visual-icon">🚀</span>
+                    <h3>Deploy</h3>
+                    <p>Put projects online</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- LEARNING JOURNEY -->
+        <section id="journey" class="section">
+            <p class="eyebrow">THE PROCESS</p>
+            <h2>What I'm learning</h2>
+            <p class="section-intro">
+                Three important parts of my journey into backend development
+                and DevOps.
+            </p>
+
+            <div class="card-grid">
+
+                <article class="learning-card">
+                    <div class="card-icon sky">01</div>
+                    <h3>Build</h3>
+                    <p>
+                        Developing applications and learning how backend
+                        systems work.
+                    </p>
+                    <span>Python · Flask · REST APIs</span>
+                </article>
+
+                <article class="learning-card">
+                    <div class="card-icon pink">02</div>
+                    <h3>Test & Automate</h3>
+                    <p>
+                        Writing automated tests and using GitHub Actions
+                        to check code changes.
+                    </p>
+                    <span>pytest · Git · GitHub Actions</span>
+                </article>
+
+                <article class="learning-card">
+                    <div class="card-icon purple">03</div>
+                    <h3>Package & Deploy</h3>
+                    <p>
+                        Learning how to package applications and make
+                        them available online.
+                    </p>
+                    <span>Docker · CI/CD · Deployment</span>
+                </article>
+
+            </div>
+        </section>
+
+        <!-- TECHNOLOGIES -->
+        <section id="tools" class="section tools-section">
+            <p class="eyebrow">MY TOOLBOX</p>
+            <h2>Tools I'm exploring</h2>
+            <p class="section-intro">
+                Learning these technologies through small practical projects.
+            </p>
+
+            <div class="technology-grid">
+                <div class="technology">🐍 <span>Python</span></div>
+                <div class="technology">⚡ <span>Flask</span></div>
+                <div class="technology">🧪 <span>pytest</span></div>
+                <div class="technology">🐙 <span>Git & GitHub</span></div>
+                <div class="technology">🔄 <span>GitHub Actions</span></div>
+                <div class="technology">🐳 <span>Docker</span></div>
+            </div>
+
+            <div class="journey-banner">
+                <span>MY CURRENT FOCUS</span>
+                <h3>Code → Test → Automate → Package → Deploy</h3>
+                <p>One step at a time. One project at a time.</p>
+            </div>
+        </section>
+
+        <!-- FEEDBACK -->
+        <section id="feedback" class="section feedback-section">
+            <div class="feedback-heading">
+                <p class="eyebrow">LET'S CONNECT</p>
+                <h2>Have advice to share?</h2>
+                <p>
+                    I'm still learning, and good advice makes a difference.
+                    Share a suggestion, improvement or resource that could
+                    help me grow.
+                </p>
+            </div>
+
+            <form action="/feedback" method="POST" class="feedback-form">
+
+                <label for="name">Your name</label>
+                <input
+                    type="text"
+                    id="name"
+                    name="name"
+                    placeholder="Enter your name"
+                    maxlength="60"
+                    required
+                >
+
+                <label for="country">Your country</label>
+                <input
+                    type="text"
+                    id="country"
+                    name="country"
+                    placeholder="e.g. Somalia, Türkiye, Germany"
+                    maxlength="80"
+                    required
+                >
+
+                <label for="email">Your email (optional)</label>
+                <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    placeholder="you@example.com"
+                    maxlength="254"
+                >
+
+                <label for="message">Your advice</label>
+                <textarea
+                    id="message"
+                    name="message"
+                    rows="5"
+                    maxlength="1000"
+                    placeholder="Share your advice or suggestion..."
+                    required
+                ></textarea>
+
+                <button type="submit" class="primary-button">
+                    Send advice →
+                </button>
+
+                {% if feedback_success %}
+                    <p class="feedback-success">{{ feedback_success }}</p>
+                {% endif %}
+
+                {% if feedback_error %}
+                    <p class="feedback-error">{{ feedback_error }}</p>
+                {% endif %}
+
+            </form>
+        </section>
+
+    </main>
+
+    <footer>
+        <a href="/" class="logo">Dev<span>Lab.</span></a>
+        <p>Built while learning. Improved through practice.</p>
+        <p>© 2026 DevLab · My learning journey</p>
+    </footer>
+
+</body>
+</html>
+
